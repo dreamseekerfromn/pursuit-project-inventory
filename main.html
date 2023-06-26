@@ -6,10 +6,23 @@
     <head>
         <title>Inventory Manager</title>
         <meta charset = "utf-8" />
-
+        <script defer src="index.js"></script>
     </head>
     <body>
-        <div></div>
-        <div></div>
+        <div class="item"></div>
+            <form class="new_item">
+                <label>Title</label><br/>
+                <input type="text" id="new_item_title" /><br/>
+                <label>Price</label><br/>
+                <input type="text" id="new_item_price" /><br/>
+                <label>Stock</label><br/>
+                <input type="text" id="new_item_stock" /><br/>
+                <label>Description</label><br/>
+                <input type="text/area" id="new_item_desc" /><br/>
+                <input type="submit" id="new_item_submit" />
+                <input type="button" id="new_item_reset" value="reset"/>
+                <p class="err" id="new_item_err">ERRRRRRR</p>
+            </form>
+        <div class="Inventory"></div>
     </body>
 </html>
