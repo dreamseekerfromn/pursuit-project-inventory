@@ -17,13 +17,22 @@ function submitEvent(){
         arrData.push(e.target.new_item_price.value);
         arrData.push(e.target.new_item_stock.value);
         arrData.push(e.target.new_item_desc.value);
-        
+        let errMsg = [];
         for(i of arrData){
-            console.log(i)
             if(!i){
-                console.log("problem")
+                errMsg.push("You must fill out all the information.");
                 flag = false;
+                break;
             }
+        }
+        console.log(Number(arrData[2]));
+        if(Number(arrData[2]) < 0 ){
+            errMsg.push("An item price cannot be negative.");
+            flag = false;
+        }
+        if(Number(arrData[3]) < 0){
+            errMsg.push("An item stock cannot be negative.");
+            flag = false;
         }
         if(flag){
             err.textContent = "";
@@ -58,7 +67,12 @@ function submitEvent(){
             idCount++;
         }
         else{
-            err.textContent = "error!";
+            let temp = "";
+            for(i of errMsg){
+                temp += i;
+                temp += `\n\n`;
+            }
+            err.textContent = temp;
             flag = true;
         }
         
