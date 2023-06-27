@@ -19,7 +19,8 @@ function submitEvent(){
         
         const p = document.querySelector(".item_list");
 
-        const table = document.createElement("table");
+        let table = document.querySelector("table");
+        
         const tr = document.createElement("tr");
         for(let i = 0; i < 5; i++){
             const td = document.createElement('td');
@@ -35,8 +36,15 @@ function submitEvent(){
             tr.remove();
         });
         tr.appendChild(button);
-        table.appendChild(tr);
-        p.append(table);
+
+        try{
+            table.prepend(tr);
+        }catch{
+            table = document.createElement("table");
+            table.prepend(tr);
+            p.append(table);
+        }
+        
         idCount++;
         /*if(!todo){
         err.textContent = "Error! To do cannot be empty!";
