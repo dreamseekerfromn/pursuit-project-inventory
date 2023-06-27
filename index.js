@@ -25,7 +25,7 @@ function submitEvent(){
                 break;
             }
         }
-        console.log(Number(arrData[2]));
+
         if(Number(arrData[2]) < 0 ){
             errMsg.push("An item price cannot be negative.");
             flag = false;
@@ -54,7 +54,8 @@ function submitEvent(){
             button.addEventListener("click", event=>{
                 tr.remove();
             });
-            tr.appendChild(button);
+            removeB.appendChild(button);
+            tr.appendChild(removeB);
 
             try{
                 table.prepend(tr);
