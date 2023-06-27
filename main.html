@@ -6,7 +6,9 @@
     <head>
         <title>Inventory Manager</title>
         <meta charset = "utf-8" />
+        <link rel="stylesheet" type="text/css" href="styles.css" />
         <script defer src="index.js"></script>
+
     </head>
     <body>
         <div class="item"></div>
@@ -18,7 +20,7 @@
                 <label>Stock</label><br/>
                 <input type="text" class="new_item" id="new_item_stock" /><br/>
                 <label>Description</label><br/>
-                <input type="text/area" class="new_item" id="new_item_desc" /><br/>
+                <textarea class="new_item" id="new_item_desc" ></textarea><br/>
                 <input type="submit" id="new_item_submit" />
                 <input type="button" id="new_item_reset" value="reset"/>
                 <p class="err" id="new_item_err">ERRRRRRR</p>

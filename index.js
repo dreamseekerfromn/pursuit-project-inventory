@@ -6,7 +6,8 @@ function submitEvent(){
 
     form.addEventListener("submit", e => {
         e.preventDefault();
-        //let todo = e.target.todo.value;
+
+        const classname = ["item_id", "item_name", "item_price", "item_stock", "item_desc"];
         const result = document.querySelector(".inventory_page");
         const err = document.querySelector("#new_item_err");
         const arrData = [];
@@ -19,14 +20,14 @@ function submitEvent(){
         const p = document.querySelector(".item_list");
 
         const table = document.createElement("table");
-        //const item = `<tr><td>${idCount}</td><td>${itemN}</td><td>${itemP}</td><td>${itemS}</td><td>${itemD}</td></tr>`;
-
+        const tr = document.createElement("tr");
         for(let i = 0; i < 5; i++){
             const td = document.createElement('td');
             td.textContent = `${arrData[i]}`;
-            table.appendChild(td);
+            td.setAttribute("class", classname[i])
+            tr.appendChild(td);
         }
-
+        table.appendChild(tr);
         p.append(table);
         idCount++;
         /*if(!todo){
