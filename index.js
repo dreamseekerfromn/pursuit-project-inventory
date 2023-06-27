@@ -62,3 +62,13 @@ function submitEvent(){
 }
 
 submitEvent();
+
+function reset(){
+    const form = document.querySelector(".new_item");
+    const reset = document.querySelector("#new_item_reset");
+    reset.addEventListener("click",e => {
+        form.reset();
+    })
+}
+
+reset();
