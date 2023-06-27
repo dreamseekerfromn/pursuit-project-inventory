@@ -1,5 +1,5 @@
 
-var idCount = 0;
+var idCount = 1;
 function submitEvent(){
     
     const form = document.querySelector(".new_item");
@@ -10,6 +10,7 @@ function submitEvent(){
         const classname = ["item_id", "item_name", "item_price", "item_stock", "item_desc"];
         const result = document.querySelector(".inventory_page");
         const err = document.querySelector("#new_item_err");
+        let flag = true;
         const arrData = [];
         arrData.push(idCount);
         arrData.push(e.target.new_item_title.value);
@@ -17,35 +18,50 @@ function submitEvent(){
         arrData.push(e.target.new_item_stock.value);
         arrData.push(e.target.new_item_desc.value);
         
-        const p = document.querySelector(".item_list");
-
-        let table = document.querySelector("table");
-        
-        const tr = document.createElement("tr");
-        for(let i = 0; i < 5; i++){
-            const td = document.createElement('td');
-            td.textContent = `${arrData[i]}`;
-            td.setAttribute("class", classname[i])
-            tr.appendChild(td);
+        for(i of arrData){
+            console.log(i)
+            if(!i){
+                console.log("problem")
+                flag = false;
+            }
         }
-        const removeB = document.createElement("td");
-        const button = document.createElement("button");
-        const buttonText = document.createTextNode("REMOVE");
-        button.appendChild(buttonText);
-        button.addEventListener("click", event=>{
-            tr.remove();
-        });
-        tr.appendChild(button);
+        if(flag){
+            err.textContent = "";
+            const p = document.querySelector(".item_list");
 
-        try{
-            table.prepend(tr);
-        }catch{
-            table = document.createElement("table");
-            table.prepend(tr);
-            p.append(table);
+            let table = document.querySelector("table");
+            
+            const tr = document.createElement("tr");
+            for(let i = 0; i < 5; i++){
+                const td = document.createElement('td');
+                td.textContent = `${arrData[i]}`;
+                td.setAttribute("class", classname[i])
+                tr.appendChild(td);
+            }
+            const removeB = document.createElement("td");
+            const button = document.createElement("button");
+            const buttonText = document.createTextNode("REMOVE");
+            button.appendChild(buttonText);
+            button.addEventListener("click", event=>{
+                tr.remove();
+            });
+            tr.appendChild(button);
+
+            try{
+                table.prepend(tr);
+            }catch{
+                table = document.createElement("table");
+                table.prepend(tr);
+                p.append(table);
+            }
+            
+            idCount++;
+        }
+        else{
+            err.textContent = "error!";
+            flag = true;
         }
         
-        idCount++;
         /*if(!todo){
         err.textContent = "Error! To do cannot be empty!";
         }
