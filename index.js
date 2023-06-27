@@ -27,6 +27,14 @@ function submitEvent(){
             td.setAttribute("class", classname[i])
             tr.appendChild(td);
         }
+        const removeB = document.createElement("td");
+        const button = document.createElement("button");
+        const buttonText = document.createTextNode("REMOVE");
+        button.appendChild(buttonText);
+        button.addEventListener("click", event=>{
+            tr.remove();
+        });
+        tr.appendChild(button);
         table.appendChild(tr);
         p.append(table);
         idCount++;
