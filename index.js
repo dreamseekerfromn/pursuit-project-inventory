@@ -1,3 +1,5 @@
+
+var idCount = 0;
 function submitEvent(){
     
     const form = document.querySelector(".new_item");
@@ -7,19 +9,26 @@ function submitEvent(){
         //let todo = e.target.todo.value;
         const result = document.querySelector(".inventory_page");
         const err = document.querySelector("#new_item_err");
-        const itemN = e.target.new_item_title.value;
-        const itemP = e.target.new_item_price.value;
-        const itemD = e.target.new_item_desc.value;
-        const itemS = e.target.new_item_stock.value;
+        const arrData = [];
+        arrData.push(idCount);
+        arrData.push(e.target.new_item_title.value);
+        arrData.push(e.target.new_item_price.value);
+        arrData.push(e.target.new_item_stock.value);
+        arrData.push(e.target.new_item_desc.value);
         
-
         const p = document.querySelector(".item_list");
 
         const table = document.createElement("table");
-        const item = `<tr><td>${itemN}</td><td>${itemP}</td><td>${itemS}</td><td>${itemD}</td></tr>`;
+        //const item = `<tr><td>${idCount}</td><td>${itemN}</td><td>${itemP}</td><td>${itemS}</td><td>${itemD}</td></tr>`;
 
-        table.innerHTML += item;
+        for(let i = 0; i < 5; i++){
+            const td = document.createElement('td');
+            td.textContent = `${arrData[i]}`;
+            table.appendChild(td);
+        }
+
         p.append(table);
+        idCount++;
         /*if(!todo){
         err.textContent = "Error! To do cannot be empty!";
         }
