@@ -1,5 +1,6 @@
 
 var idCount = 1;
+
 function submitEvent(){
     
     const form = document.querySelector(".new_item");
@@ -48,28 +49,50 @@ function submitEvent(){
             const tr = document.createElement("tr");
             for(let i = 0; i < 5; i++){
                 const td = document.createElement('td');
+
                 td.textContent = `${arrData[i]}`;
                 td.setAttribute("class", classname[i]);
-                td.setAttribute("id",`${arrData[i]}${idCount}`);
+                td.setAttribute("id",`${classname[i]}${idCount}`);
+
+                td.addEventListener("click", event => {
+
+                })
+
                 if(td.getAttribute("class") == "item_stock"){
-                    const decrement = document.createElement("button");
+                    td.setAttribute("value", arrData[i]);
+                    (Number(td.getAttribute("value")) > 0) ? td.textContent = "in Stock" : td.textContent = "Out of Stock";
+                    const decrement = document.createElement("span");
+                    decrement.textContent = "-";
+                    td.setAttribute("value", `${arrData[i]}`);
                     decrement.addEventListener("click",event=>{
                         event.preventDefault();
-                        td.textContent = (Number(td.textContent) - 1).toString();
+                        if(td.getAttribute("value") != 0){
+                            //td.textContent = (Number(td.getAttribute("value"))-1).toString();
+                            td.setAttribute("value", (Number(td.getAttribute("value"))-1).toString());
+                            (Number(td.getAttribute("value")) > 0) ? td.textContent = "in Stock" : td.textContent = "Out of Stock";
+                        }
                         td.prepend(decrement);
-                    })
-                    td.prepend(decrement);
-                    const increment = document.createElement("button");
-                    increment.addEventListener("click", event =>{
-                        event.preventDefault();
-                        td.textContent = (Number(td.textContent) + 1).toString();
                         td.append(increment);
                     })
+
+                    td.prepend(decrement);
+
+                    const increment = document.createElement("span");
+                    increment.textContent = "+";
+                    increment.addEventListener("click", event =>{
+                        event.preventDefault();
+                        //td.textContent = (Number(td.getAttribute("value"))+1).toString();
+                        td.setAttribute("value", (Number(td.getAttribute("value"))+1).toString());
+                        (Number(td.getAttribute("value")) > 0) ? td.textContent = "in Stock" : td.textContent = "Out of Stock";
+                        td.prepend(decrement);
+                        td.append(increment);
+                    })
+
                     td.append(increment);
                 }
                 tr.appendChild(td);
-                
             }
+
             const removeB = document.createElement("td");
             const button = document.createElement("button");
             const buttonText = document.createTextNode("REMOVE");
@@ -99,6 +122,8 @@ function submitEvent(){
             err.textContent = temp;
             flag = true;
         }
+
+        
                 
         form.reset();
     });
@@ -115,3 +140,37 @@ function reset(){
 }
 
 reset();
+
+/*
+function tdClickEvent(){
+    let td = document.getElementsByTagName('td');
+    for(let index = 0; index < td.length; index++){
+        
+        td[index].addEventListener("click", change, false);
+            
+    }
+    function change(){
+        if(this.firstChild.nodeType !== 3) {      
+            return;
+        }
+        let doc = document.createDocumentFragment();
+        let input = document.createElement("input");
+        input.value = this.textContent;
+        this.removeChild(this.firstChild);
+        doc.appendChild(input);
+        this.appendChild(doc);
+        
+        this.addEventListener("onsubmit", event => {
+            event.preventDefault();
+            let docType = document.createDocumentFragment();
+            let tdTemp = document.createElement("td");
+            tdTemp.value = event.target.value;
+            this.removeChild(this.firstChild);
+            docType.appendChild(tdTemp);
+            this.appendChild(docType);
+        })
+    }
+}
+        
+
+tdClickEvent();*/
