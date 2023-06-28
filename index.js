@@ -60,16 +60,23 @@ function submitEvent(){
 
                 if(td.getAttribute("class") == "item_stock"){
                     td.setAttribute("value", arrData[i]);
-                    (Number(td.getAttribute("value")) > 0) ? td.textContent = "in Stock" : td.textContent = "Out of Stock";
+                    const status = document.createElement("span");
+                    const statusTd = document.createElement("td");
+                    statusTd.className = `status`;
+                    status.className = `status${idCount}`;
+
+                    statusTd.appendChild(status);
+                    tr.appendChild(statusTd);
+                    (Number(td.getAttribute("value")) > 0) ? status.textContent = "in Stock" : status.textContent = "Out of Stock";
                     const decrement = document.createElement("span");
                     decrement.textContent = "-";
                     td.setAttribute("value", `${arrData[i]}`);
                     decrement.addEventListener("click",event=>{
                         event.preventDefault();
                         if(td.getAttribute("value") != 0){
-                            //td.textContent = (Number(td.getAttribute("value"))-1).toString();
                             td.setAttribute("value", (Number(td.getAttribute("value"))-1).toString());
-                            (Number(td.getAttribute("value")) > 0) ? td.textContent = "in Stock" : td.textContent = "Out of Stock";
+                            (Number(td.getAttribute("value")) > 0) ? status.textContent = "in Stock" : status.textContent = "Out of Stock";
+                            td.textContent = td.getAttribute("value").toString();
                         }
                         td.prepend(decrement);
                         td.append(increment);
@@ -81,9 +88,9 @@ function submitEvent(){
                     increment.textContent = "+";
                     increment.addEventListener("click", event =>{
                         event.preventDefault();
-                        //td.textContent = (Number(td.getAttribute("value"))+1).toString();
                         td.setAttribute("value", (Number(td.getAttribute("value"))+1).toString());
-                        (Number(td.getAttribute("value")) > 0) ? td.textContent = "in Stock" : td.textContent = "Out of Stock";
+                        (Number(td.getAttribute("value")) > 0) ? status.textContent = "in Stock" : status.textContent = "Out of Stock";
+                        td.textContent = td.getAttribute("value").toString();
                         td.prepend(decrement);
                         td.append(increment);
                     })
