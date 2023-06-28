@@ -10,8 +10,8 @@ function submitEvent(){
 
         const classname = ["item_id", "item_name", "item_price", "item_stock", "item_desc"];
         
-        const result = document.querySelector(".inventory_page");
         const err = document.querySelector("#new_item_err");
+        
         
         let flag = true;
         
@@ -59,24 +59,30 @@ function submitEvent(){
                 })
 
                 if(td.getAttribute("class") == "item_stock"){
+                    td.textContent = "";
                     td.setAttribute("value", arrData[i]);
                     const status = document.createElement("span");
                     const statusTd = document.createElement("td");
                     statusTd.className = `status`;
                     status.className = `status${idCount}`;
-
                     statusTd.appendChild(status);
                     tr.appendChild(statusTd);
+
+                    const stock = document.createElement("span");
+                    stock.textContent = td.getAttribute("value");
+                    stock.className = 'stock';
+                    td.appendChild(stock);
                     (Number(td.getAttribute("value")) > 0) ? status.textContent = "in Stock" : status.textContent = "Out of Stock";
                     const decrement = document.createElement("span");
                     decrement.textContent = "-";
+                    decrement.className = 'stock';
                     td.setAttribute("value", `${arrData[i]}`);
                     decrement.addEventListener("click",event=>{
                         event.preventDefault();
                         if(td.getAttribute("value") != 0){
                             td.setAttribute("value", (Number(td.getAttribute("value"))-1).toString());
                             (Number(td.getAttribute("value")) > 0) ? status.textContent = "in Stock" : status.textContent = "Out of Stock";
-                            td.textContent = td.getAttribute("value").toString();
+                            stock.textContent = td.getAttribute("value").toString();
                         }
                         td.prepend(decrement);
                         td.append(increment);
@@ -86,11 +92,12 @@ function submitEvent(){
 
                     const increment = document.createElement("span");
                     increment.textContent = "+";
+                    increment.className = 'stock';
                     increment.addEventListener("click", event =>{
                         event.preventDefault();
                         td.setAttribute("value", (Number(td.getAttribute("value"))+1).toString());
                         (Number(td.getAttribute("value")) > 0) ? status.textContent = "in Stock" : status.textContent = "Out of Stock";
-                        td.textContent = td.getAttribute("value").toString();
+                        stock.textContent = td.getAttribute("value").toString();
                         td.prepend(decrement);
                         td.append(increment);
                     })
@@ -119,21 +126,26 @@ function submitEvent(){
             }
             
             idCount++;
+            form.reset();
         }
         else{
-            let temp = "";
-            for(i of errMsg){
-                temp += i;
-                temp += `\n\n`;
-            }
-            err.textContent = temp;
+            errHandler(errMsg);
             flag = true;
         }
-
-        
-                
-        form.reset();
     });
+
+    function errHandler(err){
+        console.log(err)
+        const error = document.querySelector("#new_item_err");
+        error.textContent = "";
+        const ul = document.createElement("ul");
+        for(let str of err){
+            const li = document.createElement("li");
+            li.textContent = str;
+            ul.appendChild(li);
+        }
+        error.appendChild(ul);
+    }
 }
 
 submitEvent();
@@ -147,6 +159,8 @@ function reset(){
 }
 
 reset();
+
+
 
 /*
 function tdClickEvent(){
