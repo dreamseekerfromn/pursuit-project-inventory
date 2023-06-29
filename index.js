@@ -1,5 +1,6 @@
 
 var idCount = 1;
+var data = [];
 
 function submitEvent(){
     
@@ -24,6 +25,7 @@ function submitEvent(){
         
         let errMsg = [];
 
+        /* empty data checking */
         for(i of arrData){
             if(!i){
                 errMsg.push("You must fill out all the information.");
@@ -32,35 +34,51 @@ function submitEvent(){
             }
         }
 
+        /* checking for negative numbers */
         if(Number(arrData[2]) < 0 ){
             errMsg.push("An item price cannot be negative.");
+            e.target.new_item_price.value = 0;
             flag = false;
         }
         if(Number(arrData[3]) < 0){
             errMsg.push("An item stock cannot be negative.");
+            e.target.new_item_stock.value = 0;
             flag = false;
         }
-        if(flag){
-            err.textContent = "";
-            const p = document.querySelector(".item_list");
 
+        if(flag){
+            /* erase error msg block */
+            err.textContent = "";
+            err.setAttribute("style","display:none;")
+
+            /* queries */
+            const p = document.querySelector(".item_list");
             let table = document.querySelector("table");
-            
+
+            /* create a table row for the data */
             const tr = document.createElement("tr");
+
+            /* create td & events */
             for(let i = 0; i < 5; i++){
                 const td = document.createElement('td');
-
-                td.textContent = `${arrData[i]}`;
+                const spanText = document.createElement('span');
+                spanText.setAttribute('class', classname[i]);
+                spanText.textContent = `${arrData[i]}`;
+                td.appendChild(spanText);
                 td.setAttribute("class", classname[i]);
                 td.setAttribute("id",`${classname[i]}${idCount}`);
 
-                td.addEventListener("click", event => {
+                if(spanText.getAttribute("class") == 'item_desc'){
+                    spanText.className = "item_desc_span";
+                }
 
-                })
-
+                /* this big block of codes are belong to stock field */
                 if(td.getAttribute("class") == "item_stock"){
-                    td.textContent = "";
+                    /* empty text content, we need bunch of spans */
+                    spanText.textContent = "";
                     td.setAttribute("value", arrData[i]);
+
+                    /* inStock, Out of Stock status */
                     const status = document.createElement("span");
                     const statusTd = document.createElement("td");
                     statusTd.className = `status`;
@@ -68,45 +86,56 @@ function submitEvent(){
                     statusTd.appendChild(status);
                     tr.appendChild(statusTd);
 
-                    const stock = document.createElement("span");
-                    stock.textContent = td.getAttribute("value");
-                    stock.className = 'stock';
-                    td.appendChild(stock);
+                    /* number of stock & increment , decrement events */
+                    //const stock = document.createElement("span");
+                    spanText.textContent = td.getAttribute("value");
+                    spanText.className = 'stock';
+
+                    /* update the status */
                     (Number(td.getAttribute("value")) > 0) ? status.textContent = "in Stock" : status.textContent = "Out of Stock";
                     const decrement = document.createElement("span");
                     decrement.textContent = "-";
                     decrement.className = 'stock';
                     td.setAttribute("value", `${arrData[i]}`);
+
+                    /* decrement block start */
                     decrement.addEventListener("click",event=>{
                         event.preventDefault();
                         if(td.getAttribute("value") != 0){
                             td.setAttribute("value", (Number(td.getAttribute("value"))-1).toString());
                             (Number(td.getAttribute("value")) > 0) ? status.textContent = "in Stock" : status.textContent = "Out of Stock";
-                            stock.textContent = td.getAttribute("value").toString();
+                            spanText.textContent = td.getAttribute("value").toString();
                         }
                         td.prepend(decrement);
                         td.append(increment);
                     })
 
                     td.prepend(decrement);
+                    /* decrement block end */
 
+                    /* increment block start */
                     const increment = document.createElement("span");
                     increment.textContent = "+";
                     increment.className = 'stock';
+
                     increment.addEventListener("click", event =>{
                         event.preventDefault();
                         td.setAttribute("value", (Number(td.getAttribute("value"))+1).toString());
                         (Number(td.getAttribute("value")) > 0) ? status.textContent = "in Stock" : status.textContent = "Out of Stock";
-                        stock.textContent = td.getAttribute("value").toString();
+                        spanText.textContent = td.getAttribute("value").toString();
                         td.prepend(decrement);
                         td.append(increment);
                     })
 
                     td.append(increment);
+                    /* increment block end */
                 }
                 tr.appendChild(td);
             }
 
+            
+
+            /* remove button block */
             const removeB = document.createElement("td");
             const button = document.createElement("button");
             const buttonText = document.createTextNode("REMOVE");
@@ -117,18 +146,34 @@ function submitEvent(){
             removeB.appendChild(button);
             tr.appendChild(removeB);
 
+            /* creating the table */
             try{
-                table.prepend(tr);
+                document.querySelector(".tr_head").insertAdjacentElement("afterend",tr);    
             }catch{
                 table = document.createElement("table");
-                table.prepend(tr);
+                if(!document.querySelector(".tr_head")){
+                    const trHead = document.createElement('tr');
+                    trHead.className = "tr_head";
+                    const thProp = ['id', 'Item Name','Price', 'Stock', "", 'Item Description', ""];
+                    for(let i = 0; i < 7; i++){
+                        const th = document.createElement('th');
+                        th.textContent = thProp[i];
+                        trHead.appendChild(th);
+                    }
+                    table.prepend(trHead);
+                }
+                
+                
+                table.append(tr);
                 p.append(table);
+
             }
             
             idCount++;
             form.reset();
         }
         else{
+            /* error message block */
             errHandler(errMsg);
             flag = true;
         }
@@ -145,6 +190,7 @@ function submitEvent(){
             ul.appendChild(li);
         }
         error.appendChild(ul);
+        error.setAttribute("style", "display: block;");
     }
 }
 
