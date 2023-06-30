@@ -24,6 +24,19 @@
                 <input type="text" class="new_item" id="new_item_stock" /><br/>
                 <label for="new_item_desc">Description</label><br/>
                 <textarea class="new_item" id="new_item_desc" ></textarea><br/>
+                <label for="url">Image</label>
+                <input type="url" class="url" id="url" pattern="https://.*" /><br/>
+                <label for="platform">Platform</label>
+                <select name="platform" id="platform">
+                    <option>Steam</option>
+                    <option>Epic</option>
+                    <option>Switch</option>
+                    <option>PS5</option>
+                    <option>PS4</option>
+                    <option>XBOX series S/X</option>
+                    <option>XBOX One</option>
+                    <option>Legacy Hardware/ETC</option>
+                </select>
                 <input type="submit" id="new_item_submit" />
                 <input type="button" id="new_item_reset" value="reset"/>
                 <p class="err" id="new_item_err" style="display: none;" ></p>

@@ -1,30 +1,33 @@
-
+/* a global variable to handle id, to prevent malfunctioning w/ falsey value, it must start w/ 1 */ 
 var idCount = 1;
-var data = [];
 
+/**
+ * submitEvent()
+ * ------------------------
+ * interacting w/ the submit button in the form
+ */
 function submitEvent(){
     
     const form = document.querySelector(".new_item");
 
+    /** an event handling for form */
     form.addEventListener("submit", e => {
         e.preventDefault();
 
+        /* declaring some variables & quries */
         const classname = ["item_id", "item_name", "item_price", "item_stock", "item_desc"];
-        
         const err = document.querySelector("#new_item_err");
-        
-        
         let flag = true;
-        
+        let errMsg = [];
         const arrData = [];
+
+        /* receive data from the form */
         arrData.push(idCount);
         arrData.push(e.target.new_item_title.value);
         arrData.push(e.target.new_item_price.value);
         arrData.push(e.target.new_item_stock.value);
         arrData.push(e.target.new_item_desc.value);
         
-        let errMsg = [];
-
         /* empty data checking */
         for(i of arrData){
             if(!i){
@@ -70,6 +73,13 @@ function submitEvent(){
 
                 if(spanText.getAttribute("class") == 'item_desc'){
                     spanText.className = "item_desc_span";
+                    const urlImage = document.createElement('img');
+                    urlImage.setAttribute("src",e.target.url.value);
+                    const platform = document.createElement('span');
+                    platform.className = 'item_platform';
+                    platform.textContent = e.target.platform.value;
+                    td.prepend(urlImage);
+                    td.append(platform);
                 }
 
                 /* this big block of codes are belong to stock field */
@@ -113,7 +123,7 @@ function submitEvent(){
                     td.prepend(decrement);
                     /* decrement block end */
 
-                    /* increment block start */
+                    /* increment event block start */
                     const increment = document.createElement("span");
                     increment.textContent = "+";
                     increment.className = 'stock';
@@ -132,8 +142,6 @@ function submitEvent(){
                 }
                 tr.appendChild(td);
             }
-
-            
 
             /* remove button block */
             const removeB = document.createElement("td");
@@ -163,12 +171,11 @@ function submitEvent(){
                     table.prepend(trHead);
                 }
                 
-                
                 table.append(tr);
                 p.append(table);
-
             }
             
+            /* reset the form & increase the id counter by 1 */
             idCount++;
             form.reset();
         }
@@ -179,6 +186,13 @@ function submitEvent(){
         }
     });
 
+    /**
+     * errHandler ()
+     * -------------------------------------
+     * A basic error handling function to spread all the error messages to the html page.
+     * 
+     * @param {string []} err - an array of strings to show the errors
+     */
     function errHandler(err){
         console.log(err)
         const error = document.querySelector("#new_item_err");
@@ -196,6 +210,11 @@ function submitEvent(){
 
 submitEvent();
 
+/**
+ * reset()
+ * --------------------------------------
+ * a function to handle reset button in the form.
+ */
 function reset(){
     const form = document.querySelector(".new_item");
     const reset = document.querySelector("#new_item_reset");

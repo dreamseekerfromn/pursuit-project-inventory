@@ -63,21 +63,25 @@ td:hover {
     max-height: 20em;
 }
 
+/* id */
 td:nth-child(1) {
     width: 5%;
     text-align: right;
 }
 
+/* name */
 td:nth-child(2) {
     width: 20%;
     text-align: justify;
 }
 
+/* price */
 td:nth-child(3) {
     width: 5%;
     text-align: right;
 }
 
+/* status */
 td:nth-child(4){
     width: 10%;
     text-align: center;
@@ -92,26 +96,27 @@ tr:hover td:nth-child(4){
 }
 
 
-
+/* stock */
 td:nth-child(5){
-    width: 10%;
+    width: 7%;
     text-align: center;
     font-size: 1.3em;
 }
 
 
-
+/* description */
 td:nth-child(6) {
-    width: 40%;
+    width: 43%;
     text-align: center;
 }
 
+/* remove button */
 td:nth-child(7) {
     width: 5%;
 }
 
 td:nth-child(7):hover {
-    color:red;
+    background-color:red;
     
 }
 
