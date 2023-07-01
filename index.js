@@ -244,37 +244,3 @@ function reset(){
 reset();
 
 
-
-/*
-function tdClickEvent(){
-    let td = document.getElementsByTagName('td');
-    for(let index = 0; index < td.length; index++){
-        
-        td[index].addEventListener("click", change, false);
-            
-    }
-    function change(){
-        if(this.firstChild.nodeType !== 3) {      
-            return;
-        }
-        let doc = document.createDocumentFragment();
-        let input = document.createElement("input");
-        input.value = this.textContent;
-        this.removeChild(this.firstChild);
-        doc.appendChild(input);
-        this.appendChild(doc);
-        
-        this.addEventListener("onsubmit", event => {
-            event.preventDefault();
-            let docType = document.createDocumentFragment();
-            let tdTemp = document.createElement("td");
-            tdTemp.value = event.target.value;
-            this.removeChild(this.firstChild);
-            docType.appendChild(tdTemp);
-            this.appendChild(docType);
-        })
-    }
-}
-        
-
-tdClickEvent();*/
