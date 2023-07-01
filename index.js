@@ -49,6 +49,19 @@ function submitEvent(){
             flag = false;
         }
 
+        /* checking digits */
+        if(!/^["|']{0,1}[-]{0,1}\d{0,}(\.{0,1}\d+)["|']{0,1}$/.test(arrData[2]) && !/\d+/.test(arrData[2])){
+            errMsg.push("An item price cannot accept characters.");
+            e.target.new_item_price.value = "";
+            flag = false;
+        }
+
+        if(!/\d+/.test(arrData[3])){
+            errMsg.push("An item stock cannot accept characters.");
+            e.target.new_item_stock.value = "";
+            flag = false;
+        }
+
         if(flag){
             /* erase error msg block */
             err.textContent = "";
@@ -71,6 +84,10 @@ function submitEvent(){
                 td.setAttribute("class", classname[i]);
                 td.setAttribute("id",`${classname[i]}${idCount}`);
 
+                if(spanText.getAttribute("class") == 'item_price'){
+                    spanText.textContent = `$ ${Number(arrData[i]).toFixed(2)}`;
+                }
+
                 if(spanText.getAttribute("class") == 'item_desc'){
                     spanText.className = "item_desc_span";
                     const urlImage = document.createElement('img');
@@ -79,7 +96,8 @@ function submitEvent(){
                     platform.className = 'item_platform';
                     platform.textContent = e.target.platform.value;
                     td.prepend(urlImage);
-                    td.append(platform);
+                    td.append(document.createElement('br'));
+                    td.appendChild(platform);
                 }
 
                 /* this big block of codes are belong to stock field */

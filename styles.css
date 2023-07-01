@@ -1,12 +1,13 @@
 html {
     display: grid;
     grid-template-rows: auto auto;
-    grid-template-columns: 1fr;
+    grid-template-columns: auto;
 }
 
 header {
     width: 100%;
     grid-row: 1;
+    grid-column: 1/2;
     text-align: center;
     font-weight: bolder;
     font-size: x-large;
@@ -37,7 +38,7 @@ body {
 }
 
 table, td {
-    border: 1px solid;
+    
     width: 100%;
     border-collapse: collapse;
 }
@@ -72,7 +73,7 @@ td:nth-child(1) {
 /* name */
 td:nth-child(2) {
     width: 20%;
-    text-align: justify;
+    text-align: center;
 }
 
 /* price */
@@ -144,6 +145,19 @@ tr:hover .stock {
 
 tr:hover .item_desc_span {
     display: inline;
+}
+
+img {
+    max-width: 100px;
+    max-height: 200px;
+}
+
+tr:hover img {
+    max-width: 150px;
+    max-height: 300px;
+    border-radius: 1px;
+    border-style: double;
+    border-color: gray;
 }
 
 @media (max-width: 400px)  {
