@@ -17,6 +17,10 @@ Image url can be null, but all other fields must be filled.
 A simple transition effect is added to the table row. When hovering the mouse to a table, the indicated item row will show some hidden properties w/ 0.5 sec transition effect.
 Also, a user typed negative values for price & stock, it will automatically change to 0.
 
+Footer w/ fixed position is added too.
+
+Hovering on certain buttons will change cursor to pointer.
+
 ## ToDo
 The first goal must be adopting db to make this project actual funtional inventory page.
 The second goal is adding more events to change the values directly by clicking the data.
